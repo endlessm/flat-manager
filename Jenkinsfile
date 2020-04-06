@@ -1,16 +1,12 @@
 pipeline {
     agent {
-        docker {
-            image 'rust:slim'
-            // Need to run as root to install packages
-            args '-u 0:0'
+        dockerfile {
+            filename 'Dockerfile.build'
         }
     }
     stages {
         stage('Dependencies') {
             steps {
-                sh 'apt-get update'
-                sh 'apt-get -y install libpq-dev'
                 sh 'cargo fetch'
             }
         }
